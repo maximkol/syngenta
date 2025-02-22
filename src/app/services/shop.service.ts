@@ -1,7 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Cart, Order, Product } from '../models/dataTypes';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, of, throwError } from 'rxjs';
+import { products } from '../data/products'
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { catchError, throwError } from 'rxjs';
 export class ShopService {
 
   public replaceUrl = 'http://localhost:5000/'
-  public url = 'https://e-commerce-backend-f8v8.onrender.com/'
+  //public url = 'https://e-commerce-backend-f8v8.onrender.com/'
+  public url = 'http://localhost:5000/'
 
   public cartDataLength = new EventEmitter<Product[] | []>()
 
@@ -35,8 +37,7 @@ export class ShopService {
 
   trendyProducts(){
     // let Headers = this.getHeaders()
-    return this.http.get<Product[]>(`${this.url}products`)
-    .pipe(catchError(this.errorHandler))
+    return of(products)
   }
 
   getProduct(productId: string){

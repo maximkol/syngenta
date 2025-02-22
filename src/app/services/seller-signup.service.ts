@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 export class SellerSignupService {
 
   public replaceUrl = 'http://localhost:5000/'
-  public url = 'https://e-commerce-backend-f8v8.onrender.com/'
+  //public url = 'https://e-commerce-backend-f8v8.onrender.com/'
+  public url = 'http://localhost:5000/'
   public signupMsg = new EventEmitter<boolean>(false)
   public isSellerLoggedIn = new BehaviorSubject<boolean>(false)
 

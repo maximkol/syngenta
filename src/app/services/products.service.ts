@@ -9,7 +9,8 @@ import { Product } from '../models/dataTypes';
 export class ProductsService {
 
   public replaceUrl = 'http://localhost:5000/'
-  public url = 'https://e-commerce-backend-f8v8.onrender.com/'
+  //public url = 'https://e-commerce-backend-f8v8.onrender.com/'
+  public url = 'http://localhost:5000/'
 
   constructor(private http: HttpClient) { }
 
