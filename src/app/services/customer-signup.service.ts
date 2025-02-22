@@ -4,7 +4,7 @@ import { BehaviorSubject, catchError, throwError } from 'rxjs';
 import { Cart, Product, Signup } from '../models/dataTypes';
 import { Router } from '@angular/router';
 import { ShopService } from './shop.service';
-
+import { users } from '../data/users'
 @Injectable({
   providedIn: 'root'
 })
@@ -41,26 +41,37 @@ export class CustomerSignupService {
     .pipe(catchError(this.errorHandler))
   }
 
-  loginUser(userData: Signup){
-    this.http.post<Signup>(`${this.url}auth/login`, userData)
-    .pipe(catchError(this.errorHandler))
-    .subscribe((res)=>{
-      if(res && res.accessToken && res._id){
-        if(res.isAdmin===false){
-          this.isCustomerLoggedIn.next(true)
-          localStorage.setItem('customer', JSON.stringify({_id: res._id, accessToken: res.accessToken}))
-          this.router.navigate(['/'])
-          this.localCartToDB()
-        }else{
-          this.signupMsg.emit(true)
-        }  
+  // loginUser(userData: Signup){
+  //   this.http.post<Signup>(`${this.url}auth/login`, userData)
+  //   .pipe(catchError(this.errorHandler))
+  //   .subscribe((res)=>{
+  //     if(res && res.accessToken && res._id){
+  //       if(res.isAdmin===false){
+  //         this.isCustomerLoggedIn.next(true)
+  //         localStorage.setItem('customer', JSON.stringify({_id: res._id, accessToken: res.accessToken}))
+  //         this.router.navigate(['/'])
+  //         this.localCartToDB()
+  //       }else{
+  //         this.signupMsg.emit(true)
+  //       }  
+  //     }
+  //   }, (err)=>{
+  //     if(err){
+  //       this.signupMsg.emit(true)
+  //     }
+  //   })
+  // }
+    loginUser(userData: Signup){
+      const user = users.find(u=>u.email===userData.email && u.password === userData.password)
+      if(user){
+        this.isCustomerLoggedIn.next(true)
+        localStorage.setItem('customer', JSON.stringify({_id: user._id, accessToken: user.accessToken}))
+        this.router.navigate(['/'])
+        this.localCartToDB()
       }
-    }, (err)=>{
-      if(err){
-        this.signupMsg.emit(true)
-      }
-    })
+    
   }
+
 
   reloadSeller(){
     if(localStorage.getItem('customer')){
