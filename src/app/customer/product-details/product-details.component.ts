@@ -74,53 +74,79 @@ export class ProductDetailsComponent implements OnInit{
     }
   }
 
+  // addToCart(){
+  //   if(this.productDetails){
+  //     this.productDetails.quantity = this.productQuantity
+  //     if(!localStorage.getItem('customer')){
+  //       this.shopService.addToLocal(this.productDetails)
+  //       this.removeCartLink = true 
+  //     }else{
+  //       this.productDetails && this.shopService.addToCart(this.productDetails).subscribe((res)=>{
+  //         if(res){
+  //           // console.log(res);
+  //           this.shopService.getCartCount()
+  //           this.removeCartLink = true 
+  //         }
+  //       })
+  //     }
+  //   }
+  // }
   addToCart(){
     if(this.productDetails){
       this.productDetails.quantity = this.productQuantity
-      if(!localStorage.getItem('customer')){
-        this.shopService.addToLocal(this.productDetails)
-        this.removeCartLink = true 
-      }else{
-        this.productDetails && this.shopService.addToCart(this.productDetails).subscribe((res)=>{
-          if(res){
-            // console.log(res);
-            this.shopService.getCartCount()
-            this.removeCartLink = true 
-          }
-        })
-      }
+      this.shopService.addToLocal(this.productDetails)
+      this.removeCartLink = true 
     }
   }
 
+  // removeFromCart(){
+  //   if(this.productId){
+  //     let user = localStorage.getItem('customer')
+  //     if(!user){
+  //       this.productId && this.shopService.removeFromLocal(this.productId)
+  //       this.removeCartLink = false
+  //     }else{
+  //       // console.log(this.productId);
+  //       this.shopService.removeItemFromCart(this.productId).subscribe((res)=>{
+  //       if(res){
+  //         this.shopService.getCartCount()
+  //         this.removeCartLink = false 
+  //       }
+  //     })
+  //     }
+  //   }
+    
+  // }
   removeFromCart(){
     if(this.productId){
       let user = localStorage.getItem('customer')
-      if(!user){
-        this.productId && this.shopService.removeFromLocal(this.productId)
-        this.removeCartLink = false
-      }else{
-        // console.log(this.productId);
-        this.shopService.removeItemFromCart(this.productId).subscribe((res)=>{
-        if(res){
-          this.shopService.getCartCount()
-          this.removeCartLink = false 
-        }
-      })
-      }
+      this.productId && this.shopService.removeFromLocal(this.productId)
+      this.removeCartLink = false
     }
     
   }
 
+  // buyNow(){
+  //   if(this.productDetails){
+  //     this.productDetails.quantity = this.productQuantity
+  //     this.productDetails && this.shopService.addToCart(this.productDetails).subscribe((res)=>{
+  //     if(res){
+  //       this.shopService.getCartCount()
+  //       this.removeCartLink = true 
+  //       this.router.navigate(['/cart'])
+  //     }
+  //   })
+  //   }
+  // }
+
   buyNow(){
     if(this.productDetails){
       this.productDetails.quantity = this.productQuantity
-      this.productDetails && this.shopService.addToCart(this.productDetails).subscribe((res)=>{
-      if(res){
-        this.shopService.getCartCount()
-        this.removeCartLink = true 
-        this.router.navigate(['/cart'])
-      }
-    })
+
+      this.shopService.addToLocal(this.productDetails)
+      this.removeCartLink = true 
+      this.router.navigate(['/cart'])
+    
     }
   }
 

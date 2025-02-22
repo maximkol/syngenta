@@ -40,10 +40,14 @@ export class ShopService {
     return of(products)
   }
 
+  // getProduct(productId: string){
+  //   // let Headers = this.getHeaders()
+  //   return this.http.get<Product>(`${this.url}products/${productId}`)
+  //   .pipe(catchError(this.errorHandler))
+  // }
   getProduct(productId: string){
-    // let Headers = this.getHeaders()
-    return this.http.get<Product>(`${this.url}products/${productId}`)
-    .pipe(catchError(this.errorHandler))
+    const product = products.find(product => product._id === productId)
+    return of(product);
   }
 
   searchProducts(query: string){
