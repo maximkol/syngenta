@@ -7,11 +7,11 @@
 .container{
     padding: 10px 0 10px 100px;
     /* background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);  */
-    background-color: #573b8a;
+    /* background-color: #573b8a; */
     /* background: linear-gradient(to bottom, #573b8a, #302b63, purple); */
     height: 60px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
+    font-family: "Poppins", Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+    color: black;
     /* border-bottom: 4px solid white; */
     border-bottom: 4px solid red;
 }
@@ -36,7 +36,7 @@
 
 
 .list{
-    padding-left: 70%;
+    /* padding-left: 70%; */
     padding-bottom: 20px;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .container h1{
-    padding-top: 20px;
+    padding-top: 15px;
     float: left;
 }
 
@@ -80,5 +80,13 @@
     border-bottom: solid 1px grey;
     padding: 10px 0 10px 0;
     cursor: pointer;
+}
+
+.logo{
+  width: 150px;
+}
+.list ul .right-nav{
+    float: right;
+    margin-right: 50px;
 }
 

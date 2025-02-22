@@ -1,8 +1,10 @@
 <div class="container">
     <nav class="nav">
-        <h1 class="header" routerLink="/"><i class="fa fa-superpowers"></i>&nbsp; &nbsp;My Shopping Website</h1>
+        <h1 class="header" routerLink="/">
+            <img class="logo" src="../../assets/logo.svg" alt="Syngenta logo" />
+        </h1>
 
-        <div class="nav-search" *ngIf="menuType!=='seller'">
+        <!-- <div class="nav-search" *ngIf="menuType!=='seller'">
 
             <input #searchInput (keyup)="searchProduct($event)" (blur)="hideSearch()" type="text" placeholder="Search for Products" >
             <button (click)="onSearch(searchInput.value)"><i class="fa fa-search"></i>&nbsp;Search</button>
@@ -13,14 +15,14 @@
                 </li>
             </ul>
 
-        </div>
+        </div> -->
 
         <div [ngSwitch]="menuType" class="list">
             <ul *ngSwitchCase="'default'">
-                <li routerLink="/">Shop</li>
-                <li>Cart [{{cartCount}}]</li>
-                <li routerLink="/seller-signup">Seller</li>
-                <li routerLink="/customer-signup">Customer</li>  
+                <li routerLink="/">Каталог</li>
+                <!-- <li>Корзина [{{cartCount}}]</li> -->
+                <!-- <li routerLink="/seller-signup">Seller</li> -->
+                <li routerLink="/customer-signup" class="right-nav">Войти</li>  
             </ul>
 
             <ul *ngSwitchCase="'customer'">
