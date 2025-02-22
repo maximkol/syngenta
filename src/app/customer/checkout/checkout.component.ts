@@ -25,10 +25,10 @@ export class CheckoutComponent implements OnInit{
 
   ngOnInit(): void {
     this.shopService.getCart().subscribe((res)=>{
-      this.cart = res.cart.products
+      this.cart = res
       // console.log(this.cart);
       let price = 0
-      res.cart.products.forEach((item: any)=>{
+      res.forEach((item: any)=>{
         if(item.quantity && item.price){
           price+= (+item.price * +item.quantity)
         }

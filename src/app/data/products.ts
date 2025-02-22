@@ -10,7 +10,7 @@ export const products:Product[] = [
         "image": "https://assets.sangeethamobiles.com/product_img/14511/1694715009_2Y4.jpg",
         "desc": "Apple M2 chip with 8-core CPU, 10-core GPU, 16-core Neural Engine 8GB unified memory",
         "size": "NA",
-        "productId": "1"
+        "productId": "65f6b14442524e236089d192"
     },
     {
         "_id": "65f6b19c42524e236089d1ab",
@@ -21,7 +21,7 @@ export const products:Product[] = [
         "image": "https://assets.sangeethamobiles.com/product_img/14511/1694715009_2Y4.jpg",
         "desc": "bbbbbbbbbbbbb",
         "size": "90",
-        "productId": "2"
+        "productId": "65f6b19c42524e236089d1ab"
     },
     {
         "_id": "65f6b1bc42524e236089d1ad",
@@ -32,6 +32,6 @@ export const products:Product[] = [
         "image": "https://m.media-amazon.com/images/I/71CW7r7QcpL._SX679_.jpg",
         "desc": "(Refurbished) Dell Optiplex 3020 Desktop (Intel Core i3/8 GB RAM(Upgradable to 16GB) / 1TB HDD/ Windows 10 Pro, MS Office/USB, Ethernet,VGA,1",
         "size": "NA",
-        "productId": "3"
+        "productId": "65f6b1bc42524e236089d1ad"
     },
 ]

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of, throwError } from 'rxjs';
-import { Cart, Product, Signup } from '../models/dataTypes';
+import { Signup } from '../models/dataTypes';
 import { Router } from '@angular/router';
 import { ShopService } from './shop.service';
 import { users } from '../data/users'
@@ -67,7 +67,7 @@ export class CustomerSignupService {
         this.isCustomerLoggedIn.next(true)
         localStorage.setItem('customer', JSON.stringify({_id: user._id, accessToken: user.accessToken}))
         this.router.navigate(['/'])
-        this.localCartToDB()
+        //this.localCartToDB()
       }
     
   }
@@ -92,30 +92,30 @@ export class CustomerSignupService {
     throw new Error('User not found');
   }
 
-  localCartToDB(){
-    let data = localStorage.getItem('localCart')
-    if(data){
-      let cartDataList:Product[] = JSON.parse(data)
+  // localCartToDB(){
+  //   let data = localStorage.getItem('localCart')
+  //   if(data){
+  //     let cartDataList:Product[] = JSON.parse(data)
 
-      cartDataList.forEach((product: Product, index)=> {
-        let cartData: Cart={
-          ...product,
-          productId: product._id
-        }
-        // console.log(cartData);
+  //     cartDataList.forEach((product: Product, index)=> {
+  //       let cartData: Cart={
+  //         ...product,
+  //         productId: product._id
+  //       }
+  //       // console.log(cartData);
         
-        this.shopService.addFromLocalToCart(cartData).subscribe((res)=>{
-          if(res){
-            console.log(res)
-          }
-        })
-        if(cartDataList.length === index+1){
-          localStorage.removeItem('localCart')
-        }
-      })
-    }
+  //       this.shopService.addFromLocalToCart(cartData).subscribe((res)=>{
+  //         if(res){
+  //           console.log(res)
+  //         }
+  //       })
+  //       if(cartDataList.length === index+1){
+  //         localStorage.removeItem('localCart')
+  //       }
+  //     })
+  //   }
     
-    this.shopService.getCartCount()
+  //   this.shopService.getCartCount()
     
-  }
+  // }
 }

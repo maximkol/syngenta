@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Cart, Order, Product } from '../models/dataTypes';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, of, throwError } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { products } from '../data/products'
 
 @Injectable({
@@ -94,14 +94,18 @@ export class ShopService {
     .pipe(catchError(this.errorHandler))
   }
 
+  // removeItemFromCart(productId: string){
+  //   let userStore = localStorage.getItem('customer')
+  //   let accessToken = userStore && JSON.parse(userStore).accessToken
+  //   let httpHeaders: HttpHeaders = new HttpHeaders({
+  //     'Authorization': `Bearer ${accessToken}`
+  //   })
+  //   return this.http.post<Product>(`${this.url}carts/remove-cart-item`, {productId: productId}, { headers: httpHeaders })
+  //   .pipe(catchError(this.errorHandler))
+  // }
   removeItemFromCart(productId: string){
-    let userStore = localStorage.getItem('customer')
-    let accessToken = userStore && JSON.parse(userStore).accessToken
-    let httpHeaders: HttpHeaders = new HttpHeaders({
-      'Authorization': `Bearer ${accessToken}`
-    })
-    return this.http.post<Product>(`${this.url}carts/remove-cart-item`, {productId: productId}, { headers: httpHeaders })
-    .pipe(catchError(this.errorHandler))
+    this.removeFromLocal(productId)
+    return of();
   }
 
   emptyCart(){
@@ -110,21 +114,49 @@ export class ShopService {
     .pipe(catchError(this.errorHandler))
   }
 
-  getCart(){
-    let Headers = this.getHeaders()
-    return this.http.get<Cart>(`${this.url}carts/get-cart`, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+  // getCart(){
+  //   let Headers = this.getHeaders()
+  //   return this.http.get<Cart>(`${this.url}carts/get-cart`, { headers: Headers })
+  //   .pipe(catchError(this.errorHandler))
+  // }
+  getCart():Observable<Product[]>{
+    let cartData:Product[];
+    let localCart = localStorage.getItem('localCart')
+    if(localCart) {
+      cartData = JSON.parse(localCart)
+      return of(cartData)
+    }
+    else{
+      return of()
+    }
   }
 
+  // getCartCount(){
+  //   let Headers = this.getHeaders()
+  //   return this.http.get<any>(`${this.url}carts/get-cart`, { headers: Headers })
+  //   .pipe(catchError(this.errorHandler))
+  //   .subscribe((res)=>{
+  //     if(res){
+  //       this.cartDataLength.emit(res.cart.products)
+  //     }
+  //   })
+  // }
   getCartCount(){
-    let Headers = this.getHeaders()
-    return this.http.get<any>(`${this.url}carts/get-cart`, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
-    .subscribe((res)=>{
-      if(res){
-        this.cartDataLength.emit(res.cart.products)
-      }
-    })
+    let cartData:Product[];
+    let localCart = localStorage.getItem('localCart')
+    if(localCart) {
+      cartData = JSON.parse(localCart)
+      return of(cartData)
+      .subscribe((res)=>{
+          this.cartDataLength.emit(res)
+      });
+    }
+    else{
+      return of()
+      .subscribe((res)=>{
+        this.cartDataLength.emit(res)
+    });
+    }
   }
 
   createOrder(orderData: Order){

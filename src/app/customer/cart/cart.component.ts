@@ -28,10 +28,10 @@ export class CartComponent implements OnInit{
 
   loadCardDetails(){
     this.shopService.getCart().subscribe((res)=>{
-      this.cart = res.cart.products
+      this.cart = res
       // console.log(this.cart);
       let price = 0
-      res.cart.products.forEach((item: any)=>{
+      res.forEach((item: any)=>{
         if(item.quantity && item.price){
           price+= +item.price * +item.quantity 
         }
@@ -50,9 +50,8 @@ export class CartComponent implements OnInit{
   }
 
   removeFromCart(productId: string){
-    this.shopService.removeItemFromCart(productId).subscribe((res)=>{
-      this.loadCardDetails() 
-    })
+    this.shopService.removeFromLocal(productId)
+    this.loadCardDetails() 
     
   }
 

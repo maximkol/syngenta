@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cart, Product, Signup } from '../../models/dataTypes';
+import { Signup } from '../../models/dataTypes';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerSignupService } from '../../services/customer-signup.service';
