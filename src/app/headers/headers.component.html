@@ -26,16 +26,19 @@
             </ul>
 
             <ul *ngSwitchCase="'customer'">
-                <li routerLink="/">Shop</li>
-                <li routerLink="/cart">Cart [{{cartCount}}]</li>
-                <li routerLink="/orders">Orders</li>
-                <li (click)="onCustomerLogout()">Logout</li>   
-                <div class="dropdown">
+                <li routerLink="/">Каталог</li>
+                <li routerLink="/orders">Заказы</li>
+                <li routerLink="/profile" class="right-nav">{{userName | titlecase}}</li> 
+                <li routerLink="/cart" class="right-nav">Корзина [{{cartCount}}]</li>
+                
+                <!-- <li (click)="onCustomerLogout()" class="right-nav">{{userName | titlecase}}</li>    -->
+                  
+                <!-- <div class="dropdown">
                     <li (mouseenter)="isHidden = !isHidden" (mouseleave)="isHidden = !isHidden" class="dropbtn"><i class="fa fa-info-circle"></i></li>
                     <div class="dropdown-content">
                         <a *ngIf="isHidden">&nbsp; &nbsp;{{userName | titlecase}}!</a>
                     </div>    
-                </div> 
+                </div>  -->
             </ul>
 
             <ul *ngSwitchCase="'seller'">

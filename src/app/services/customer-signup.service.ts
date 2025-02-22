@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, throwError } from 'rxjs';
 import { Cart, Product, Signup } from '../models/dataTypes';
 import { Router } from '@angular/router';
 import { ShopService } from './shop.service';
@@ -80,9 +80,16 @@ export class CustomerSignupService {
     }
   }
 
-  getUser(userData: Signup){
-    let Headers = this.getHeaders()
-    return this.http.get<Signup>(`${this.url}users/${userData._id}`, { headers: Headers })
+  // getUser(userData: Signup){
+  //   let Headers = this.getHeaders()
+  //   return this.http.get<Signup>(`${this.url}users/${userData._id}`, { headers: Headers })
+  // }
+  getUser(userData: Signup):Observable<Signup>{
+    const user = users.find(u=>u._id === userData._id)
+    if(user){
+      return of(user)
+    }
+    throw new Error('User not found');
   }
 
   localCartToDB(){

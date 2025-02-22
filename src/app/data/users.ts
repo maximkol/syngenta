@@ -1,11 +1,13 @@
-export const users = [
+import { Signup } from "../models/dataTypes";
+
+export const users:Signup[] = [
     {
-        id: 1,
-        name: 'Test User',
+        username: 'Test User',
         email: 'test@gmail.com',
         password: '123456',
-        _id:1,
-        accessToken:"sdfjndb"
+        _id:"1",
+        accessToken:"sdfjndb",
+        isAdmin:false
     },
     
 ]
