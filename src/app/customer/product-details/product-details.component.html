@@ -6,17 +6,17 @@
   
         <div class="box">
             <img src="{{productDetails?.image}}" alt="">
-            <h2>Price: $ {{productDetails?.price}}</h2>
-            <div style="padding-left: 41%;">Color: <h3 [style.backgroundColor]="productDetails?.color" class="product-color"></h3>
-            </div>
+            <h2>Цена: $ {{productDetails?.price}}</h2>
+            <!-- <div style="padding-left: 41%;">Color: <h3 [style.backgroundColor]="productDetails?.color" class="product-color"></h3>
+            </div> -->
             
-            <p>Category: {{productDetails?.categories}}</p>
+            <p>Категория: {{productDetails?.categories}}</p>
             <p>{{productDetails?.desc}}</p>
             <div>
-                <a (click)="addToCart()" *ngIf="!removeCartLink" class="btn" style="background: #de7906;">Add To Cart</a>&nbsp;
-                <a (click)="removeFromCart()" *ngIf="removeCartLink" class="btn" style="background: #de7906;">Remove From Cart</a>&nbsp;
-                <a (click)="buyNow()" *ngIf="!removeCartLink" class="btn">Buy Now</a>
-                <a routerLink="/cart" *ngIf="removeCartLink" class="btn">Go To Cart</a>
+                <a (click)="addToCart()" *ngIf="!removeCartLink" class="btn" style="background: #de7906;">В корзину</a>&nbsp;
+                <a (click)="removeFromCart()" *ngIf="removeCartLink" class="btn" style="background: #de7906;">Удалить из корзины</a>&nbsp;
+                <a (click)="buyNow()" *ngIf="!removeCartLink" class="btn">Купить сейчас</a>
+                <a routerLink="/cart" *ngIf="removeCartLink" class="btn">Открыть корзину</a>
             </div>
             <div class="quantity-group" *ngIf="!removeCartLink">
                 <button (click)="handleQuantity('min')">-</button>
