@@ -48,7 +48,7 @@ export class CustomerSignupService {
     .subscribe((res)=>{
       if(res && res.result === "OK" && res.user_id){
         this.isCustomerLoggedIn.next(true)
-        localStorage.setItem('customer', JSON.stringify({user_id: res.user_id, userName: res.username}))
+        localStorage.setItem('customer', JSON.stringify({user_id: res.user_id, username: res.username}))
         this.router.navigate(['/']) 
       }
     }, (err)=>{
