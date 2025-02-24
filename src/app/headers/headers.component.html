@@ -1,57 +1,19 @@
 <div class="container">
     <nav class="nav">
-        <h1 class="header" routerLink="/">
+        <div class="navigation">
             <img class="logo" src="../../assets/logo.svg" alt="Syngenta logo" />
-        </h1>
-
-        <!-- <div class="nav-search" *ngIf="menuType!=='seller'">
-
-            <input #searchInput (keyup)="searchProduct($event)" (blur)="hideSearch()" type="text" placeholder="Search for Products" >
-            <button (click)="onSearch(searchInput.value)"><i class="fa fa-search"></i>&nbsp;Search</button>
-
-            <ul class="suggested-result" *ngIf="searchResults">
-                <li *ngFor="let item of searchResults">
-                    <a (mousedown)="redirectToDetails(item._id)">{{item.title}}</a>
-                </li>
-            </ul>
-
-        </div> -->
-
-        <div [ngSwitch]="menuType" class="list">
-            <ul *ngSwitchCase="'default'">
-                <li routerLink="/">Каталог</li>
-                <!-- <li>Корзина [{{cartCount}}]</li> -->
-                <!-- <li routerLink="/seller-signup">Seller</li> -->
-                <li routerLink="/customer-signup" class="right-nav">Войти</li>  
-            </ul>
-
-            <ul *ngSwitchCase="'customer'">
-                <li routerLink="/">Каталог</li>
-                <li routerLink="/orders">Заказы</li>
-                <li routerLink="/profile" class="right-nav">{{userName | titlecase}}</li> 
-                <li routerLink="/cart" class="right-nav">Корзина [{{cartCount}}]</li>
-                
-                <!-- <li (click)="onCustomerLogout()" class="right-nav">{{userName | titlecase}}</li>    -->
-                  
-                <!-- <div class="dropdown">
-                    <li (mouseenter)="isHidden = !isHidden" (mouseleave)="isHidden = !isHidden" class="dropbtn"><i class="fa fa-info-circle"></i></li>
-                    <div class="dropdown-content">
-                        <a *ngIf="isHidden">&nbsp; &nbsp;{{userName | titlecase}}!</a>
-                    </div>    
-                </div>  -->
-            </ul>
-
-            <ul *ngSwitchCase="'seller'">
-                <li routerLink="/products">Products</li>
-                <li routerLink="/products/upload">Add</li>
-                <li (click)="onSellerLogout()">Logout</li>  
-                <div class="dropdown">
-                    <li (mouseenter)="isHidden = !isHidden" (mouseleave)="isHidden = !isHidden" class="dropbtn"><i class="fa fa-info-circle"></i></li>
-                    <div class="dropdown-content">
-                        <a *ngIf="isHidden">&nbsp; &nbsp;Welcome {{userName | titlecase}}!</a>
-                    </div>    
-                </div> 
-            </ul>
+            <div routerLink="/">Главная</div>
+            <div routerLink="/">Каталог</div>
+        </div>
+        <div [ngSwitch]="menuType" >
+            <div class="navigation right-nav" *ngSwitchCase="'default'">
+                <div routerLink="/customer-signup">Войти</div>  
+            </div>
+            <div class="navigation right-nav" *ngSwitchCase="'customer'">
+                <div routerLink="/orders">Заказы</div>
+                <div routerLink="/cart" >Корзина [{{cartCount}}]</div>
+                <div routerLink="/profile" >{{userName | titlecase}}</div> 
+            </div>
         </div>
     </nav>
 </div>
