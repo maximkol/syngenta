@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Signup } from '../../models/dataTypes';
+//import { Signup } from '../../models/dataTypes';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerSignupService } from '../../services/customer-signup.service';
 import { ShopService } from '../../services/shop.service';
+import { LoginRequest } from '../../models/dataTypes';
 
 @Component({
   selector: 'app-customer-signup',
@@ -24,7 +25,7 @@ export class CustomerSignupComponent implements OnInit{
   })
 
   customerLoginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    login: ['', [Validators.required]],
     password: ['', [Validators.required]]
   })
 
@@ -32,24 +33,24 @@ export class CustomerSignupComponent implements OnInit{
     this.signupService.reloadSeller()
   }
 
-  onSignup(){
-    let userData = this.customerSignupForm.value as Signup
-    this.signupService.signupUser(userData).subscribe((res)=>{
-      // console.log(res);
-      if(res){
-        this.signupMsg = `You Have Successfully Signed Up, Please Login`
-        this.customerSignupForm.reset()
-      }
-    }, (err)=>{
-      // console.warn(err.error.message);
-      this.signupMsg = err.error.msg
-      this.customerSignupForm.reset()
-    })
+  // onSignup(){
+  //   let userData = this.customerSignupForm.value as Signup
+  //   this.signupService.signupUser(userData).subscribe((res)=>{
+  //     // console.log(res);
+  //     if(res){
+  //       this.signupMsg = `You Have Successfully Signed Up, Please Login`
+  //       this.customerSignupForm.reset()
+  //     }
+  //   }, (err)=>{
+  //     // console.warn(err.error.message);
+  //     this.signupMsg = err.error.msg
+  //     this.customerSignupForm.reset()
+  //   })
     
-  }
+  // }
 
   onLogin(){
-    let userData = this.customerLoginForm.value as Signup
+    let userData = this.customerLoginForm.value as LoginRequest
     this.signupService.loginUser(userData)
     
     this.signupService.signupMsg.subscribe((res)=>{

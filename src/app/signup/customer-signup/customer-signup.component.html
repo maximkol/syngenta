@@ -22,7 +22,7 @@
 				</form> -->
 				<form [formGroup]="customerLoginForm" (ngSubmit)="onLogin()">
 					<label for="chk" aria-hidden="true">Вход</label>
-					<input type="email" name="email" placeholder="Email" formControlName="email">
+					<input type="email" name="login" placeholder="Email" formControlName="login">
 					<input type="password" name="password" placeholder="Пароль" formControlName="password">
 					<button>Войти</button>
 					<small class="login-msg">{{signupMsg}}</small>

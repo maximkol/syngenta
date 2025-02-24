@@ -1,10 +1,19 @@
-export interface Signup{
-    _id: string,
-    username: string,
-    email: string
-    password: string,
-    accessToken: string | undefined,
-    isAdmin: boolean | undefined
+// export interface Signup{
+//     _id: string,
+//     login: string,
+//     email: string
+//     password: string,
+//     accessToken: string | undefined,
+//     isAdmin: boolean | undefined
+// }
+export interface LoginRequest {
+    login:string;
+    password:string;
+}
+export interface User {
+    user_id:string;
+    username:string;
+    result:string;
 }
 
 export interface Product{

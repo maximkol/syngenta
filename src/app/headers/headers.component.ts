@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SellerSignupService } from '../services/seller-signup.service';
 import { CustomerSignupService } from '../services/customer-signup.service';
 import { ShopService } from '../services/shop.service';
 import { Product } from '../models/dataTypes';
@@ -18,7 +17,7 @@ export class HeadersComponent implements OnInit {
   public searchResults: undefined | Product[]
   public cartCount: number = 0
 
-  constructor(private router: Router, private sellerSignupService: SellerSignupService,
+  constructor(private router: Router, 
     private customerSignupService: CustomerSignupService, private shopService: ShopService) { }
 
   ngOnInit(): void {
@@ -31,10 +30,7 @@ export class HeadersComponent implements OnInit {
         let customerData = customerStore && JSON.parse(customerStore)
 
         if (sellerData && res.url.includes('products')) {
-          this.sellerSignupService.getUser(sellerData).subscribe((res) => {
-            this.userName = res.username
-            this.menuType = 'seller'
-          })
+          
         } else if (customerData) {
           this.customerSignupService.getUser(customerData).subscribe((res) => {
             this.userName = res.username

@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeadersComponent } from './headers/headers.component';
 import { CustomerModule } from './customer/customer.module';
-import { SellerModule } from './seller/seller.module';
 import { SignupModule } from './signup/signup.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -22,7 +21,6 @@ import { ProfileComponent } from './profile/profile.component';
     BrowserModule,
     AppRoutingModule,
     CustomerModule,
-    SellerModule,
     SignupModule,
     HttpClientModule
   ],

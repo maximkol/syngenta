@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of, throwError } from 'rxjs';
-import { Signup } from '../models/dataTypes';
 import { Router } from '@angular/router';
 import { ShopService } from './shop.service';
-import { users } from '../data/users'
+import { LoginRequest, User } from '../models/dataTypes';
+import { AccessToken } from '../environment/elma';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,19 +12,19 @@ export class CustomerSignupService {
 
   public replaceUrl = 'http://localhost:5000/'
   //public url = 'https://e-commerce-backend-f8v8.onrender.com/'
-  public url = 'http://localhost:5000/'
+  public url = 'https://76mk34qndj4z4.elma365.ru/api/extensions/45640319-c190-46da-a326-18da0f1cae78/script/'
   public signupMsg = new EventEmitter<boolean>(false)
   public isCustomerLoggedIn = new BehaviorSubject<boolean>(false)
 
   constructor(private http: HttpClient, private router: Router, private shopService: ShopService) { }
 
   getHeaders(){
-    let userStore = localStorage.getItem('customer')
-    let accessToken = userStore && JSON.parse(userStore).accessToken
+    // let userStore = localStorage.getItem('customer')
+    // let accessToken = userStore && JSON.parse(userStore).accessToken
 
     let httpHeaders: HttpHeaders = new HttpHeaders({
       'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${accessToken}`
+      'Authorization': `Bearer ${AccessToken}`
     })
 
     return httpHeaders
@@ -36,41 +36,37 @@ export class CustomerSignupService {
     return throwError(error)
   }
 
-  signupUser(userData: Signup){
-    return this.http.post<Signup>(`${this.url}auth/register`, userData)
-    .pipe(catchError(this.errorHandler))
-  }
-
-  // loginUser(userData: Signup){
-  //   this.http.post<Signup>(`${this.url}auth/login`, userData)
+  // signupUser(userData: Signup){
+  //   return this.http.post<Signup>(`${this.url}auth/register`, userData)
   //   .pipe(catchError(this.errorHandler))
-  //   .subscribe((res)=>{
-  //     if(res && res.accessToken && res._id){
-  //       if(res.isAdmin===false){
-  //         this.isCustomerLoggedIn.next(true)
-  //         localStorage.setItem('customer', JSON.stringify({_id: res._id, accessToken: res.accessToken}))
-  //         this.router.navigate(['/'])
-  //         this.localCartToDB()
-  //       }else{
-  //         this.signupMsg.emit(true)
-  //       }  
-  //     }
-  //   }, (err)=>{
-  //     if(err){
-  //       this.signupMsg.emit(true)
-  //     }
-  //   })
   // }
-    loginUser(userData: Signup){
-      const user = users.find(u=>u.email===userData.email && u.password === userData.password)
-      if(user){
+
+  loginUser(userData: LoginRequest){
+    let Headers = this.getHeaders()
+    this.http.post<User>(`${this.url}Authorization`, userData, { headers: Headers })
+    .pipe(catchError(this.errorHandler))
+    .subscribe((res)=>{
+      if(res && res.result === "OK" && res.user_id){
         this.isCustomerLoggedIn.next(true)
-        localStorage.setItem('customer', JSON.stringify({_id: user._id, accessToken: user.accessToken}))
-        this.router.navigate(['/'])
-        //this.localCartToDB()
+        localStorage.setItem('customer', JSON.stringify({user_id: res.user_id, userName: res.username}))
+        this.router.navigate(['/']) 
       }
-    
+    }, (err)=>{
+      if(err){
+        this.signupMsg.emit(true)
+      }
+    })
   }
+  //   loginUser(userData: Signup){
+  //     const user = users.find(u=>u.email===userData.email && u.password === userData.password)
+  //     if(user){
+  //       this.isCustomerLoggedIn.next(true)
+  //       localStorage.setItem('customer', JSON.stringify({_id: user._id, accessToken: user.accessToken}))
+  //       this.router.navigate(['/'])
+  //       //this.localCartToDB()
+  //     }
+    
+  // }
 
 
   reloadSeller(){
@@ -84,9 +80,10 @@ export class CustomerSignupService {
   //   let Headers = this.getHeaders()
   //   return this.http.get<Signup>(`${this.url}users/${userData._id}`, { headers: Headers })
   // }
-  getUser(userData: Signup):Observable<Signup>{
-    const user = users.find(u=>u._id === userData._id)
-    if(user){
+  getUser(userData: User):Observable<User>{
+    const userInfo = localStorage.getItem("customer");
+    if(userInfo){
+      let user:User = JSON.parse(userInfo)
       return of(user)
     }
     throw new Error('User not found');
