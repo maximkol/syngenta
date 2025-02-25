@@ -40,7 +40,7 @@ export class ShopService {
           return {
             _id: p.item_id,
             title: p.name,
-            price: p.price.cents,
+            price: p.price.cents / 100,
             image: p.img,
             desc: p.desc,
             productId: p.item_id
@@ -49,19 +49,20 @@ export class ShopService {
         return result;
       }),
       catchError(err => {
-          console.log(err);
-          return of();
+        console.log(err);
+        return of();
       })
-  );
-    
+    );
+
   }
+
 
   // getProduct(productId: string){
   //   // let Headers = this.getHeaders()
   //   return this.http.get<Product>(`${this.url}products/${productId}`)
   //   .pipe(catchError(this.errorHandler))
   // }
-  getProduct(productId: string):Observable<Product> {
+  getProduct(productId: string): Observable<Product> {
     this.trendyProducts().subscribe((res) => {
       if (res && res.length) {
         const product = res.find(p => p._id === productId)

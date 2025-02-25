@@ -36,11 +36,14 @@
     background: #fff;
     text-align: center;
     padding:30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .container .box-container .box img{
-    height: 80px;
     cursor: pointer;
+    width: 100%;
 }
 
 .container .box-container .box h3{
