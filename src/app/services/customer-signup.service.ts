@@ -4,7 +4,7 @@ import { BehaviorSubject, catchError, Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ShopService } from './shop.service';
 import { LoginRequest, User } from '../models/dataTypes';
-import { AccessToken } from '../environment/elma';
+import { AccessToken, ElmaPublicApiUrl } from '../environment/elma';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +12,7 @@ export class CustomerSignupService {
 
   public replaceUrl = 'http://localhost:5000/'
   //public url = 'https://e-commerce-backend-f8v8.onrender.com/'
-  public url = 'https://76mk34qndj4z4.elma365.ru/api/extensions/45640319-c190-46da-a326-18da0f1cae78/script/'
+  
   public signupMsg = new EventEmitter<boolean>(false)
   public isCustomerLoggedIn = new BehaviorSubject<boolean>(false)
 
@@ -43,7 +43,7 @@ export class CustomerSignupService {
 
   loginUser(userData: LoginRequest){
     let Headers = this.getHeaders()
-    this.http.post<User>(`${this.url}Authorization`, userData, { headers: Headers })
+    this.http.post<User>(`${ElmaPublicApiUrl}Authorization`, userData, { headers: Headers })
     .pipe(catchError(this.errorHandler))
     .subscribe((res)=>{
       if(res && res.result === "OK" && res.user_id){

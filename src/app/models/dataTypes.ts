@@ -15,16 +15,34 @@ export interface User {
     username:string;
     result:string;
 }
+export interface ProductsResponse {
+    result: string,
+    objs: ProductResponse[],
+}
+export interface ProductResponse {
+    name: string,
+    item_id: string,
+    desc: string,
+    img: string,
+    price: {
+        _currency : {
+            code: string,
+            name: string,
+            country: string
+            units:number
+        },
+        cents: number
+    }
+}
 
 export interface Product{
     _id: string,
     title: string,
     price: number,
-    color: string,
-    categories: string,
+    categories?: string,
     desc: string,
     image: string,
-    size: string,
+    size?: string,
     quantity?: number,
     productId: string
 }
@@ -34,11 +52,10 @@ export interface Cart{
     _id: string, 
     title: string, 
     price: number, 
-    color: string, 
-    categories: string, 
+    categories?: string, 
     desc: string, 
     image: string, 
-    size: string, 
+    size?: string, 
     quantity?: number | undefined, 
     cart?: any,
     cartCount?: number | undefined

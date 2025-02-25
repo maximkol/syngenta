@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Cart, Order, Product } from '../models/dataTypes';
+import { Cart, Order, Product, ProductsResponse } from '../models/dataTypes';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of, throwError } from 'rxjs';
-import { products } from '../data/products'
+import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { AccessToken, ElmaPublicApiUrl } from '../environment/elma';
 
 @Injectable({
   providedIn: 'root'
@@ -17,27 +17,43 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getHeaders(){
-    let userStore = localStorage.getItem('customer')
-    let accessToken = userStore && JSON.parse(userStore).accessToken
-
+  getHeaders() {
     let httpHeaders: HttpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${accessToken}`
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${AccessToken}`
     })
 
     return httpHeaders
 
   }
 
-  errorHandler(error: HttpErrorResponse){
-    console.log(error);  
+  errorHandler(error: HttpErrorResponse) {
+    console.log(error);
     return throwError(error)
   }
 
-  trendyProducts(){
-    // let Headers = this.getHeaders()
-    return of(products)
+  trendyProducts(): Observable<Product[]> {
+    let Headers = this.getHeaders();
+    return this.http.get<ProductsResponse>(`${ElmaPublicApiUrl}Get_list_items`, { headers: Headers }).pipe(
+      map(res => {
+        const result: Product[] = res.objs.map(p => {
+          return {
+            _id: p.item_id,
+            title: p.name,
+            price: p.price.cents,
+            image: p.img,
+            desc: p.desc,
+            productId: p.item_id
+          }
+        })
+        return result;
+      }),
+      catchError(err => {
+          console.log(err);
+          return of();
+      })
+  );
+    
   }
 
   // getProduct(productId: string){
@@ -45,24 +61,32 @@ export class ShopService {
   //   return this.http.get<Product>(`${this.url}products/${productId}`)
   //   .pipe(catchError(this.errorHandler))
   // }
-  getProduct(productId: string){
-    const product = products.find(product => product._id === productId)
-    return of(product);
+  getProduct(productId: string):Observable<Product> {
+    this.trendyProducts().subscribe((res) => {
+      if (res && res.length) {
+        const product = res.find(p => p._id === productId)
+        return of(product);
+      }
+      return of()
+    })
+    return of()
   }
 
-  searchProducts(query: string){
+
+
+  searchProducts(query: string) {
     let Headers = this.getHeaders()
     return this.http.get<Product[]>(`${this.url}products/?category=${query}`, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+      .pipe(catchError(this.errorHandler))
   }
 
-  addToLocal(productData: Product){
+  addToLocal(productData: Product) {
     let cartData = []
     let localCart = localStorage.getItem('localCart')
-    if(!localCart){
+    if (!localCart) {
       localStorage.setItem('localCart', JSON.stringify([productData]))
       this.cartDataLength.emit([productData])
-    }else{
+    } else {
       cartData = JSON.parse(localCart)
       cartData.push(productData)
       localStorage.setItem('localCart', JSON.stringify(cartData))
@@ -70,28 +94,32 @@ export class ShopService {
     }
   }
 
-  removeFromLocal(productId: string){
+  removeFromLocal(productId: string) {
     let cartData = localStorage.getItem('localCart')
-    if(cartData){
-      let items:Product[] = JSON.parse(cartData)
-      items = items.filter((item:Product)=>productId!==item._id)
+    if (cartData) {
+      let items: Product[] = JSON.parse(cartData)
+      items = items.filter((item: Product) => productId !== item._id)
       localStorage.setItem('localCart', JSON.stringify(items))
       this.cartDataLength.emit(items)
     }
   }
 
-  addToCart(productData: Product){
+  addToCart(productData: Product) {
     let Headers = this.getHeaders()
-    return this.http.post<Product>(`${this.url}carts`, {productId: productData._id, quantity: productData.quantity,
-    image: productData.image, title: productData.title, price: productData.price}, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+    return this.http.post<Product>(`${this.url}carts`, {
+      productId: productData._id, quantity: productData.quantity,
+      image: productData.image, title: productData.title, price: productData.price
+    }, { headers: Headers })
+      .pipe(catchError(this.errorHandler))
   }
 
-  addFromLocalToCart(productData: Cart){
+  addFromLocalToCart(productData: Cart) {
     let Headers = this.getHeaders()
-    return this.http.post<Cart>(`${this.url}carts`, {productId: productData._id, quantity: productData.quantity,
-    image: productData.image, title: productData.title, price: productData.price}, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+    return this.http.post<Cart>(`${this.url}carts`, {
+      productId: productData._id, quantity: productData.quantity,
+      image: productData.image, title: productData.title, price: productData.price
+    }, { headers: Headers })
+      .pipe(catchError(this.errorHandler))
   }
 
   // removeItemFromCart(productId: string){
@@ -103,15 +131,15 @@ export class ShopService {
   //   return this.http.post<Product>(`${this.url}carts/remove-cart-item`, {productId: productId}, { headers: httpHeaders })
   //   .pipe(catchError(this.errorHandler))
   // }
-  removeItemFromCart(productId: string){
+  removeItemFromCart(productId: string) {
     this.removeFromLocal(productId)
     return of();
   }
 
-  emptyCart(){
+  emptyCart() {
     let Headers = this.getHeaders()
     return this.http.put<Cart>(`${this.url}carts/empty-cart`, null, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+      .pipe(catchError(this.errorHandler))
   }
 
   // getCart(){
@@ -119,14 +147,14 @@ export class ShopService {
   //   return this.http.get<Cart>(`${this.url}carts/get-cart`, { headers: Headers })
   //   .pipe(catchError(this.errorHandler))
   // }
-  getCart():Observable<Product[]>{
-    let cartData:Product[];
+  getCart(): Observable<Product[]> {
+    let cartData: Product[];
     let localCart = localStorage.getItem('localCart')
-    if(localCart) {
+    if (localCart) {
       cartData = JSON.parse(localCart)
       return of(cartData)
     }
-    else{
+    else {
       return of()
     }
   }
@@ -141,39 +169,39 @@ export class ShopService {
   //     }
   //   })
   // }
-  getCartCount(){
-    let cartData:Product[];
+  getCartCount() {
+    let cartData: Product[];
     let localCart = localStorage.getItem('localCart')
-    if(localCart) {
+    if (localCart) {
       cartData = JSON.parse(localCart)
       return of(cartData)
-      .subscribe((res)=>{
+        .subscribe((res) => {
           this.cartDataLength.emit(res)
-      });
+        });
     }
-    else{
+    else {
       return of()
-      .subscribe((res)=>{
-        this.cartDataLength.emit(res)
-    });
+        .subscribe((res) => {
+          this.cartDataLength.emit(res)
+        });
     }
   }
 
-  createOrder(orderData: Order){
+  createOrder(orderData: Order) {
     let Headers = this.getHeaders()
     return this.http.post<Order>(`${this.url}orders`, orderData, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+      .pipe(catchError(this.errorHandler))
   }
 
-  getUserOrders(){
+  getUserOrders() {
     let Headers = this.getHeaders()
     return this.http.get<Order[]>(`${this.url}orders/user-orders`, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+      .pipe(catchError(this.errorHandler))
   }
 
-  deleteOrder(orderId: any){
+  deleteOrder(orderId: any) {
     let Headers = this.getHeaders()
     return this.http.delete<any>(`${this.url}orders/${orderId}`, { headers: Headers })
-    .pipe(catchError(this.errorHandler))
+      .pipe(catchError(this.errorHandler))
   }
 }
