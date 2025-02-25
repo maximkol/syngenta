@@ -16,7 +16,7 @@ export class ShopService {
   public cartDataLength = new EventEmitter<Product[] | []>()
 
   constructor(private http: HttpClient) { }
-
+  private products: Product[] = [];
   getHeaders() {
     let httpHeaders: HttpHeaders = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -43,9 +43,11 @@ export class ShopService {
             price: p.price.cents / 100,
             image: p.img,
             desc: p.desc,
-            productId: p.item_id
+            productId: p.item_id,
+            categories:"Семена"
           }
         })
+        this.products = result;
         return result;
       }),
       catchError(err => {
@@ -63,14 +65,11 @@ export class ShopService {
   //   .pipe(catchError(this.errorHandler))
   // }
   getProduct(productId: string): Observable<Product> {
-    this.trendyProducts().subscribe((res) => {
-      if (res && res.length) {
-        const product = res.find(p => p._id === productId)
-        return of(product);
-      }
-      return of()
-    })
-    return of()
+    const product = this.products.find(p => p._id === productId);
+    if(product){
+      return of(product)
+    }
+    return of();
   }
 
 

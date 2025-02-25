@@ -7,7 +7,7 @@
         <div class="box" *ngFor="let item of allSearchedProducts">
             <h1>{{item.title}}</h1>
             <img routerLink="/product-details/{{item._id}}" src="{{item.image}}" alt="">
-            <h2>Price: $ {{item.price}}</h2>
+            <h2>Price: ₽{{item.price}}₽</h2>
             <p>Category: {{item.categories}}</p>
             <a routerLink="/product-details/{{item._id}}" class="btn">View Details</a>
         </div>
