@@ -10,18 +10,6 @@
     transition: .2s linear;
 }
 
-.container{
-    /* background:linear-gradient(45deg, blueviolet, lightgreen); */
-    padding:15px 9%;
-    padding-bottom: 100px;
-}
-
-.container .heading{
-    padding-bottom: 15px;
-    color: rgb(129, 9, 129);
-    text-shadow: 0 5px 10px rgba(0,0,0,.2);
-    font-size: 50px;
-}
 
 .container .box-container{
     display: grid;

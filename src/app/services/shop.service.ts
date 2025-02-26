@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { AddProductToCartRequest, Cart, Order, OrdersRequest, OrdersResponse, Product, ProductsResponse, StartOrderRequest, User } from '../models/dataTypes';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { AccessToken, ElmaPublicApiUrl, ElmaRunBusinessProcessUrl } from '../environment/elma';
+import { AccessToken, ElmaPublicApiUrl } from '../environment/elma';
 
 @Injectable({
   providedIn: 'root'
@@ -201,11 +201,9 @@ export class ShopService {
   createOrder(orderId:string):Observable<any> {
     let Headers = this.getHeaders()
     const request: StartOrderRequest = {
-      context: {
-        order_id: orderId
-      }
+      order_id: orderId
     }
-    return this.http.post<any>(`${ElmaRunBusinessProcessUrl}`, request, { headers: Headers })
+    return this.http.post<any>(`${ElmaPublicApiUrl}Start_bp`, request, { headers: Headers })
       .pipe(catchError(this.errorHandler))
   }
 

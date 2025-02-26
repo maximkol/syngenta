@@ -9,6 +9,8 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderComponent } from './order/order.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatButtonModule
   ]
 })
 export class CustomerModule { }

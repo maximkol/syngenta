@@ -104,7 +104,5 @@ export interface OrderResponse {
     }
 }
 export interface StartOrderRequest{
-    context:{
-        order_id:string
-    }
+    order_id:string
 }

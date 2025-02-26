@@ -1,6 +1,7 @@
 <div class="container">
-
-    <h1 class="heading">{{productDetails?.title}}</h1>
+    <mat-toolbar>
+        <span>{{productDetails?.title}}</span>
+    </mat-toolbar>
   
     <div class="box-container">
   
@@ -13,6 +14,7 @@
             <p>Категория: {{productDetails?.categories}}</p>
             <p>{{productDetails?.desc}}</p>
             <div>
+                <button mat-button>Basic</button>
                 <a (click)="addToCart()" *ngIf="!removeCartLink" class="btn" style="background: #de7906;">В корзину</a>&nbsp;
                 <a (click)="removeFromCart()" *ngIf="removeCartLink" class="btn" style="background: #de7906;">Удалить из корзины</a>&nbsp;
                 <a (click)="buyNow()" *ngIf="!removeCartLink" class="btn">Купить сейчас</a>
