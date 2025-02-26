@@ -18,11 +18,16 @@ nav * {
     height:100%;
     width: 400px;
     justify-content: space-around;
+    font-size:18px
 }
 
-/* .right-nav {
-    width: 300px;
-} */
+.right-nav {
+    max-width: 300px;
+    justify-content: end;
+}
+.right-nav * {
+    padding-left: 30px;
+}
 
 .logo{
   width: 150px;

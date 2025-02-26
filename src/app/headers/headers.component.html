@@ -1,18 +1,20 @@
 <div class="container">
     <nav class="nav">
         <div class="navigation">
-            <img class="logo" src="../../assets/logo.svg" alt="Syngenta logo" />
-            <div routerLink="/">Главная</div>
+            <img routerLink="/" class="logo" src="../../assets/logo.svg" alt="Syngenta logo" />
             <div routerLink="/">Каталог</div>
+            @if(menuType === "customer"){
+                <div routerLink="/orders">Заказы</div>
+            }
         </div>
         <div [ngSwitch]="menuType" >
             <div class="navigation right-nav" *ngSwitchCase="'default'">
                 <div routerLink="/customer-signup">Войти</div>  
             </div>
             <div class="navigation right-nav" *ngSwitchCase="'customer'">
-                <div routerLink="/orders">Заказы</div>
-                <div routerLink="/cart" >Корзина [{{cartCount}}]</div>
-                <div routerLink="/profile" >{{userName | titlecase}}</div> 
+                <mat-icon matBadge="{{cartCount}}"  matBadgeColor="primary" routerLink="/cart" aria-hidden="false" >shopping_cart</mat-icon>
+                <mat-icon routerLink="/profile" aria-hidden="false" fontIcon="person"></mat-icon>
+                <!-- <div routerLink="/profile" >{{userName | titlecase}}</div>  -->
             </div>
         </div>
     </nav>

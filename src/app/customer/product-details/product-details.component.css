@@ -6,7 +6,7 @@
     box-sizing: border-box;
     outline: none; border:none;
     text-decoration: none;
-    /* text-transform: capitalize; */
+    
     transition: .2s linear;
 }
 
@@ -51,19 +51,12 @@
 }
 
 .container .box-container .box .btn{
-    margin-top: 10px;
-    display: inline-block;
-    background:#333;
-    color:#fff;
-    font-size: 17px;
-    border-radius: 5px;
-    padding: 8px 25px;
-    cursor: pointer;
+    margin-right: 10px;
 }
 
-.container .box-container .box .btn:hover{
+/* .container .box-container .box .btn:hover{
     letter-spacing: 1px;
-}
+} */
 
 .product-color{
     border: 3px solid #ddd;

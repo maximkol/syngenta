@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileComponent } from './profile/profile.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatIconModule} from '@angular/material/icon';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppRoutingModule,
     CustomerModule,
     SignupModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
+    MatBadgeModule
   ],
   providers: [
     provideAnimationsAsync()

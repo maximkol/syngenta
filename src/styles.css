@@ -8,6 +8,10 @@ body {
     font-family: sans-serif;
     /* background-color: #b2a2c4; */
 }
+main {
+    padding:15px 9%;
+    padding-bottom: 100px;
+}
 
 .small-msg{
 	padding-left: 60px;
