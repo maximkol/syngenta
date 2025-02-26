@@ -10,8 +10,9 @@ import { ShopService } from '../../services/shop.service';
 })
 export class CartComponent implements OnInit{
 
-  public cart: Cart[] | undefined
-
+  cart: Cart[] | undefined
+  displayedColumns = ['title', 'quantity', 'price', 'delete']
+  footerColumns = ['title', 'price']
   public priceSummary: PriceSummary = {
     price: 0,
     discount: 0,
