@@ -1,6 +1,6 @@
 .container{
     height: 60px;
-    font-family: "Poppins", Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+    /* font-family: "Poppins", Helvetica Neue, Helvetica, Roboto, Arial, sans-serif; */
 }
 
 .nav {
@@ -17,8 +17,12 @@ nav * {
     align-items: center;
     height:100%;
     width: 400px;
-    justify-content: space-around;
+    justify-content: left;
     font-size:18px
+}
+
+.navigation * {
+    margin-right: 40px;
 }
 
 .right-nav {
