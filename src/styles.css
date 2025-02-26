@@ -21,7 +21,7 @@ main {
     color: purple;
 }
 
-mat-toolbar{
+.title{
     margin-bottom: 20px;
 }
 html, body { height: 100%; }

@@ -20,6 +20,7 @@ export class CartComponent implements OnInit{
     delivery: 0,
     total: 0
   }
+  isLoading = false
 
   constructor(private router: Router, private shopService: ShopService){}
 
@@ -57,6 +58,7 @@ export class CartComponent implements OnInit{
   }
 
   createOrder(){
+    this.isLoading = true;
     const product = this.cart?.[0];
     const userInfo = localStorage.getItem("customer");
     if (userInfo && product) {
@@ -69,7 +71,9 @@ export class CartComponent implements OnInit{
             this.shopService.createOrder(newOrder.order_id)
             .subscribe((res)=>{
               this.shopService.emptyCart()
+              this.isLoading = false;
               this.router.navigate(['/orders'])
+
             })
           }
         })

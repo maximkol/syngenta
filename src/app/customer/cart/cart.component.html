@@ -1,5 +1,5 @@
 <section>
-  <mat-toolbar>
+  <mat-toolbar class="title">
     <span>Корзина</span>
   </mat-toolbar>
   @if(cart)
@@ -34,8 +34,13 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       <tr mat-footer-row *matFooterRowDef="footerColumns"></tr>
     </table>
-
-    <button mat-raised-button color="primary" (click)="createOrder()" id="submitbtn">Заказать</button>
+    <div class="submit-wrap">
+      <button mat-raised-button color="primary" (click)="createOrder()" disabled="isLoading" id="submitbtn">Заказать</button>
+      @if(isLoading){ 
+        <mat-spinner diameter="20"></mat-spinner>
+      }
+    </div>
+    
   }
   
   <!-- <div id="page">

@@ -29,9 +29,17 @@ section {
   max-width: 1000px;
   margin: auto;
 }
+.title{
+  margin-bottom: 20px;
+}
 tr.mat-mdc-footer-row td {
   font-weight: bold;
 }
+.submit-wrap{
+  display: flex;
+  align-items: center;
+}
+
 /* table {
   width: 100%;
 } */
@@ -210,5 +218,5 @@ td.checkout {
 
 
 #submitbtn {
-  margin: 20px 0 0 0;
+  margin: 20px 20px 20px 0;
 }

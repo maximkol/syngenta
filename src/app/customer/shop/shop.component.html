@@ -1,17 +1,24 @@
 <div class="container">
-    <mat-toolbar>
+    <mat-toolbar class="title">
         <span>Семена и средства защиты растений</span>
     </mat-toolbar>
-    <div class="box-container">
+    <!-- <mat-spinner diameter="50" class="loader"></mat-spinner> -->
+    @if(shopProducts){
+        <div class="box-container">
   
-        <div class="box"  *ngFor="let item of shopProducts">
-            <img src="{{item.image}}" routerLink="/product-details/{{item._id}}">
-            <h3>{{item.title}}</h3>
-            <p>Цена: {{item.price}}₽</p>
-            <a routerLink="/product-details/{{item._id}}" class="btn">Подробнее</a>
+            <div class="box"  *ngFor="let item of shopProducts">
+                <img src="{{item.image}}" routerLink="/product-details/{{item._id}}">
+                <h3>{{item.title}}</h3>
+                <p>Цена: {{item.price}}₽</p>
+                <a routerLink="/product-details/{{item._id}}" class="btn">Подробнее</a>
+            </div>
+      
         </div>
-  
-    </div>
+    }
+    @else{
+        <mat-spinner diameter="50" class="loader"></mat-spinner>
+    }
+    
   
   </div>
   

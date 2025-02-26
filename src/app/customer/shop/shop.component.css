@@ -10,6 +10,12 @@
     transition: .2s linear;
 }
 
+.loader{
+    margin: 100px auto;
+}
+.title{
+    margin-bottom: 20px;
+}
 /* .container{
     padding:15px 9%;
     padding-bottom: 100px;
