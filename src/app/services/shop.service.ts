@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { AddProductToCartRequest, Cart, Order, OrdersRequest, OrdersResponse, Product, ProductsResponse, StartOrderRequest, User } from '../models/dataTypes';
+import { AddProductToCartRequest, Cart, Order, OrderResponse, OrdersRequest, OrdersResponse, Product, ProductsResponse, StartOrderRequest, User } from '../models/dataTypes';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { AccessToken, ElmaPublicApiUrl } from '../environment/elma';
@@ -215,11 +215,14 @@ export class ShopService {
     return this.http.post<OrdersResponse>(`${ElmaPublicApiUrl}Get_my_orders`, request, { headers: Headers })
       .pipe(
         map((response: OrdersResponse) => {
-          const result:Order[] = response.objs.map(res=>{
+          const reversedResult: OrderResponse[] = response.objs.reverse()
+          const result:Order[] = reversedResult.map(res=>{
             return {
               order_id: res.order_id,
               orderStatus: res.status,
               totalPrice: res?.amount?.cents ? res.amount.cents / 100 : undefined,
+              name: res.name,
+              date: new Date(res.date_zak.ts).toLocaleDateString("ru-RU"),
             }
           })
           return result

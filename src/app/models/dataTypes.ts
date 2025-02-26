@@ -86,8 +86,9 @@ export interface Order{
         amount: number
     },
     orderStatus: "В обработке" | "Создан"
-    order_id:string
-
+    order_id:string,
+    name:string,
+    date:string
 }
 export interface OrdersRequest {
     user_id:string;
@@ -101,6 +102,10 @@ export interface OrderResponse {
     status: "В обработке" | "Создан",
     amount?: {
         cents: number,
+    },
+    name: string,
+    date_zak:{
+        ts:string,
     }
 }
 export interface StartOrderRequest{

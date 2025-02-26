@@ -11,7 +11,7 @@ export class OrderComponent implements OnInit {
 
   public orders: Order[] | undefined
   public orderPresent: boolean = false
-
+  displayedColumns = ['date', 'status', 'price']
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
