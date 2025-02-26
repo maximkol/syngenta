@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cart, PriceSummary } from '../../models/dataTypes';
+import { Cart, PriceSummary, User } from '../../models/dataTypes';
 import { Router } from '@angular/router';
 import { ShopService } from '../../services/shop.service';
 
@@ -39,7 +39,7 @@ export class CartComponent implements OnInit{
       this.priceSummary.price = price
       this.priceSummary.tax = price/10
       this.priceSummary.delivery = 100
-      this.priceSummary.total = price + price/10 + 100
+      this.priceSummary.total = price //price + price/10 + 100
       // console.log(this.priceSummary.total);
       if(!this.cart?.length){
         this.router.navigate(['/'])
@@ -55,8 +55,25 @@ export class CartComponent implements OnInit{
     
   }
 
-  checkoutOrder(){
-    this.router.navigate(['/checkout'])
+  createOrder(){
+    const product = this.cart?.[0];
+    const userInfo = localStorage.getItem("customer");
+    if (userInfo && product) {
+      let user: User = JSON.parse(userInfo)
+      this.shopService.addProductToCart(product, user.user_id)
+      .subscribe((res)=>{
+        this.shopService.getUserOrders(user.user_id).subscribe((res)=>{
+          const newOrder = res.find(o=>o.orderStatus === "Создан")
+          if(newOrder){
+            this.shopService.createOrder(newOrder.order_id)
+            .subscribe((res)=>{
+              this.shopService.emptyCart()
+              this.router.navigate(['/orders'])
+            })
+          }
+        })
+      })
+    }
   }
 
 }

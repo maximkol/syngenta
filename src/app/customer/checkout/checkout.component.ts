@@ -52,21 +52,21 @@ export class CheckoutComponent implements OnInit{
       //   })
       // })
 
-      this.shopService.createOrder(orderData).subscribe((res)=>{
-        if(res){
-          this.orderMsg = 'Your Order Has Been Successfully Placed'
-        }
-        setTimeout(() => {  
-          this.shopService.emptyCart().subscribe((res)=>{
-            if(res){
-              console.log(res);
+      // this.shopService.createOrder(orderData).subscribe((res)=>{
+      //   if(res){
+      //     this.orderMsg = 'Your Order Has Been Successfully Placed'
+      //   }
+      //   setTimeout(() => {  
+      //     this.shopService.emptyCart().subscribe((res)=>{
+      //       if(res){
+      //         console.log(res);
               
-              this.shopService.getCartCount()
-            }
-          })
-          this.router.navigate(['/orders'])
-        }, 4000);
-      })
+      //         this.shopService.getCartCount()
+      //       }
+      //     })
+      //     this.router.navigate(['/orders'])
+      //   }, 4000);
+      // })
     }
     
     

@@ -46,6 +46,12 @@ export interface Product{
     quantity?: number,
     productId: string
 }
+export interface AddProductToCartRequest{
+    user_id:string;
+    item_id: string,
+    amount: number,
+}
+
 
 export interface Cart{ 
     productId: string, 
@@ -70,15 +76,35 @@ export interface PriceSummary{
 }
 
 export interface Order{
-    email: string,
-    address: string,
-    contact: string,
-    totalPrice: number,
-    cartTotal: number,
-    paymentIntent: {
+    email?: string,
+    address?: string,
+    contact?: string,
+    totalPrice?: number,
+    cartTotal?: number,
+    paymentIntent?: {
         id: string,
         amount: number
     },
-    orderStatus: string
+    orderStatus: "В обработке" | "Создан"
+    order_id:string
 
+}
+export interface OrdersRequest {
+    user_id:string;
+}
+export interface OrdersResponse{
+    result: string,
+    objs: OrderResponse[],
+}
+export interface OrderResponse {
+    order_id:string,
+    status: "В обработке" | "Создан",
+    amount?: {
+        cents: number,
+    }
+}
+export interface StartOrderRequest{
+    context:{
+        order_id:string
+    }
 }

@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Cart, Order, Product, ProductsResponse } from '../models/dataTypes';
+import { AddProductToCartRequest, Cart, Order, OrdersRequest, OrdersResponse, Product, ProductsResponse, StartOrderRequest, User } from '../models/dataTypes';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { AccessToken, ElmaPublicApiUrl } from '../environment/elma';
+import { AccessToken, ElmaPublicApiUrl, ElmaRunBusinessProcessUrl } from '../environment/elma';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,7 @@ export class ShopService {
             image: p.img,
             desc: p.desc,
             productId: p.item_id,
-            categories:"Семена"
+            categories: "Семена"
           }
         })
         this.products = result;
@@ -66,7 +66,7 @@ export class ShopService {
   // }
   getProduct(productId: string): Observable<Product> {
     const product = this.products.find(p => p._id === productId);
-    if(product){
+    if (product) {
       return of(product)
     }
     return of();
@@ -137,9 +137,7 @@ export class ShopService {
   }
 
   emptyCart() {
-    let Headers = this.getHeaders()
-    return this.http.put<Cart>(`${this.url}carts/empty-cart`, null, { headers: Headers })
-      .pipe(catchError(this.errorHandler))
+    localStorage.removeItem('localCart');
   }
 
   // getCart(){
@@ -187,16 +185,49 @@ export class ShopService {
     }
   }
 
-  createOrder(orderData: Order) {
+  addProductToCart(productData: Product, userId:string): Observable<string> {
     let Headers = this.getHeaders()
-    return this.http.post<Order>(`${this.url}orders`, orderData, { headers: Headers })
+    const request: AddProductToCartRequest = {
+      user_id: userId,
+      item_id: productData._id,
+      amount: productData.quantity ? productData.quantity : 1
+    }
+    return this.http.post<string>(`${ElmaPublicApiUrl}Add_to_cart`, request, { headers: Headers })
       .pipe(catchError(this.errorHandler))
   }
 
-  getUserOrders() {
+  
+
+  createOrder(orderId:string):Observable<any> {
     let Headers = this.getHeaders()
-    return this.http.get<Order[]>(`${this.url}orders/user-orders`, { headers: Headers })
+    const request: StartOrderRequest = {
+      context: {
+        order_id: orderId
+      }
+    }
+    return this.http.post<any>(`${ElmaRunBusinessProcessUrl}`, request, { headers: Headers })
       .pipe(catchError(this.errorHandler))
+  }
+
+  getUserOrders(userId:string):Observable<Order[]> {
+    let Headers = this.getHeaders()
+    const request: OrdersRequest = {
+      user_id: userId
+    }
+    return this.http.post<OrdersResponse>(`${ElmaPublicApiUrl}Get_my_orders`, request, { headers: Headers })
+      .pipe(
+        map((response: OrdersResponse) => {
+          const result:Order[] = response.objs.map(res=>{
+            return {
+              order_id: res.order_id,
+              orderStatus: res.status,
+              totalPrice: res?.amount?.cents ? res.amount.cents / 100 : undefined,
+            }
+          })
+          return result
+        }),
+        catchError(this.errorHandler)
+      )
   }
 
   deleteOrder(orderId: any) {

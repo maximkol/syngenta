@@ -80,7 +80,7 @@ export class CustomerSignupService {
   //   let Headers = this.getHeaders()
   //   return this.http.get<Signup>(`${this.url}users/${userData._id}`, { headers: Headers })
   // }
-  getUser(userData: User):Observable<User>{
+  getUser():Observable<User>{
     const userInfo = localStorage.getItem("customer");
     if(userInfo){
       let user:User = JSON.parse(userInfo)

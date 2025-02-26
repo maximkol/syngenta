@@ -32,7 +32,7 @@ export class HeadersComponent implements OnInit {
         if (sellerData && res.url.includes('products')) {
           
         } else if (customerData) {
-          this.customerSignupService.getUser(customerData).subscribe((res) => {
+          this.customerSignupService.getUser().subscribe((res) => {
             this.userName = res.username
             this.menuType = 'customer'
           })
