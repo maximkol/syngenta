@@ -225,7 +225,7 @@ export class ShopService {
               order_id: res.order_id,
               orderStatus: res.status,
               totalPrice: res?.amount?.cents ? res.amount.cents / 100 : undefined,
-              name: res.name,
+              name: res.name.substring(0, res.name.indexOf('Клиент')),
               date: new Date(res.date_zak.ts).toLocaleDateString("ru-RU"),
             }
           })
