@@ -20,6 +20,7 @@
     grid-template-columns: auto auto auto;
     column-gap: 50px;
     margin-top: 20px;
+    row-gap: 20px;
 }
 
 .reg-label {
@@ -71,6 +72,8 @@
     color:#3c3838;
     font-size: 15px;
     line-height: 1.8;
+}
+.container .box-container .box .details{
     padding:10px 0 10px 0;
 }
 
