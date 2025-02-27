@@ -14,6 +14,26 @@
     background-color: #fff;
 }
 
+
+.reg{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 50px;
+    margin-top: 20px;
+}
+
+.reg-label {
+    grid-column: 1;
+}
+.reg-value {
+    grid-column: 2;
+    padding: 0;
+}
+.footer-btn {
+    display: flex;
+    justify-content: end;
+}
+
 .container .box-container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -41,9 +61,10 @@
 }
 
 .container .box-container .box h3{
-    color:#3d3a3a;
+    /* color:#3d3a3a; */
     font-size: 22px;
     padding:10px 0 10px 0;
+    font-weight: 500;
 }
 
 .container .box-container .box p{

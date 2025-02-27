@@ -15,6 +15,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {MatCardModule} from '@angular/material/card';
     MatTableModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatInputModule
   ]
 })
 export class CustomerModule { }

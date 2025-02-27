@@ -32,7 +32,11 @@ export interface ProductResponse {
             units:number
         },
         cents: number
-    }
+    }, 
+    culture:string;
+    reg_code:string;
+    region:string;
+    reg_ad:string;
 }
 
 export interface Product{
@@ -44,7 +48,11 @@ export interface Product{
     image: string,
     size?: string,
     quantity?: number,
-    productId: string
+    productId: string,
+    culture:string;
+    reg_code:string;
+    region:string;
+    reg_ad:string;
 }
 export interface AddProductToCartRequest{
     user_id:string;
@@ -64,7 +72,11 @@ export interface Cart{
     size?: string, 
     quantity?: number | undefined, 
     cart?: any,
-    cartCount?: number | undefined
+    cartCount?: number | undefined,
+    culture:string;
+    reg_code:string;
+    region:string;
+    reg_ad:string;
 }
 
 export interface PriceSummary{

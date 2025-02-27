@@ -7,13 +7,30 @@
   
         <div class="box">
             <img src="{{productDetails?.image}}" alt="">
-            <h2>Цена: {{productDetails?.price}}₽</h2>
+            <h3>Цена: {{productDetails?.price}}₽</h3>
             <!-- <div style="padding-left: 41%;">Color: <h3 [style.backgroundColor]="productDetails?.color" class="product-color"></h3>
             </div> -->
             
             <p>Категория: {{productDetails?.categories}}</p>
             <p>{{productDetails?.desc}}</p>
-            <div>
+            <h4>Регламенты применения</h4>
+            <div class="reg">
+                <mat-label class="reg-label">Регистрационный код</mat-label>
+                <p class="reg-value">{{productDetails?.reg_code}}</p>
+
+                <mat-label class="reg-label">Регионы допуска</mat-label>
+                <p class="reg-value">{{productDetails?.region}}</p>
+
+                <mat-label class="reg-label">Регионы адаптации</mat-label>
+                <p class="reg-value">{{productDetails?.reg_ad}}</p>
+
+                <mat-label class="reg-label">Культура</mat-label>
+                <p class="reg-value">{{productDetails?.culture}}</p>
+                
+            </div>
+            
+            
+            <div class="footer-btn">
                 <button mat-raised-button (click)="addToCart()" *ngIf="!removeCartLink" class="btn">В корзину</button>
                 <button mat-raised-button (click)="removeFromCart()" *ngIf="removeCartLink" class="btn">Удалить из корзины</button>
                 <button mat-raised-button (click)="buyNow()" *ngIf="!removeCartLink" color="primary" class="btn">Купить сейчас</button>

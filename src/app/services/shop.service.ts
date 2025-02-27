@@ -44,7 +44,11 @@ export class ShopService {
             image: p.img,
             desc: p.desc,
             productId: p.item_id,
-            categories: "Семена"
+            categories: "Семена",
+            culture: p.culture,
+            reg_code: p.reg_code,
+            region: p.region,
+            reg_ad: p.reg_ad
           }
         })
         this.products = result;
