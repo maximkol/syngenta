@@ -35,7 +35,7 @@
       <tr mat-footer-row *matFooterRowDef="footerColumns"></tr>
     </table>
     <div class="submit-wrap">
-      <button mat-raised-button color="primary" (click)="createOrder()" disabled="isLoading" id="submitbtn">Заказать</button>
+      <button mat-raised-button color="primary" (click)="createOrder()" [disabled]="isLoading" id="submitbtn">Заказать</button>
       @if(isLoading){ 
         <mat-spinner diameter="20"></mat-spinner>
       }

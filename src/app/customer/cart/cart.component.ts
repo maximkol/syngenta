@@ -72,6 +72,7 @@ export class CartComponent implements OnInit{
             .subscribe((res)=>{
               this.shopService.emptyCart()
               this.isLoading = false;
+              this.shopService.getCartCount()
               this.router.navigate(['/orders'])
 
             })
