@@ -31,6 +31,7 @@ section {
 }
 .title{
   margin-bottom: 20px;
+  background-color: #fff;
 }
 tr.mat-mdc-footer-row td {
   font-weight: bold;

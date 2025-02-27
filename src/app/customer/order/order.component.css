@@ -2,7 +2,8 @@
     margin: 1%;
 } */
 .title{
-  margin-bottom: 20px;;
+  margin-bottom: 20px;
+  background-color: white;
 }
 .view-container{
     max-width: 1000px;

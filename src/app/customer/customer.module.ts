@@ -34,6 +34,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatTableModule,
     MatIconModule,
     MatProgressSpinnerModule
+    
   ]
 })
 export class CustomerModule { }

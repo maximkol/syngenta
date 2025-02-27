@@ -9,7 +9,10 @@
     
     transition: .2s linear;
 }
-
+.title{
+    margin-bottom: 20px;
+    background-color: #fff;
+}
 
 .container .box-container{
     display: grid;
