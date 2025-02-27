@@ -29,6 +29,7 @@
   
             <div class="box"  *ngFor="let item of shopProducts">
                 <img src="{{item.image}}" routerLink="/product-details/{{item._id}}">
+                
                 <h3>{{item.title}}</h3>
                 <p>Цена: {{item.price}}₽</p>
                 <a routerLink="/product-details/{{item._id}}" mat-raised-button color="primary" class="btn">Подробнее</a>

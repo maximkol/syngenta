@@ -52,9 +52,10 @@
 }
 
 .container .box-container .box h3{
-    color:#444;
-    font-size: 22px;
-    padding:10px 0;
+    color: #444;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 10px;
 }
 
 .container .box-container .box p{
